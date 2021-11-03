@@ -6,21 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.os.persistableBundleOf
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diary.databinding.FragmentFirstBinding
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 
 /**
@@ -42,6 +33,7 @@ class FirstFragment : Fragment(), SeeDiary {
         bundle.putString("diary", diary.diary)
         bundle.putString("date", diary.date.toString())
         bundle.putString("title", diary.title )
+        bundle.putString("id", diary.id )
         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundleOf("diary" to bundle))
     }
 
@@ -67,9 +59,14 @@ class FirstFragment : Fragment(), SeeDiary {
             .whereEqualTo("user_id", id)
             .get().addOnSuccessListener {
                 val diaryList = mutableListOf<DiaryModel>()
+
                 for (document in it) {
-                    diaryList.add(document.toObject(DiaryModel::class.java))
+
+                    var data = document.toObject(DiaryModel::class.java)
+                    data.id = document.id
+                    diaryList.add(data)
                 }
+                Log.d("document", diaryList.toString())
                 val rvDiaryList = binding.rvDiaryList
 
                 rvDiaryList.adapter = DiaryListAdapter(this, diaryList)
@@ -79,6 +76,8 @@ class FirstFragment : Fragment(), SeeDiary {
             findNavController().navigate(R.id.action_FirstFragment_to_addDiaryFragment)
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
