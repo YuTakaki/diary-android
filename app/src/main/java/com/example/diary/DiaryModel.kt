@@ -7,9 +7,6 @@ data class DiaryModel(
     val diary: String = "",
     val title: String = "",
     val user_id: String = "",
-    var id: String = ""
-        )
-
-data class DiaryListModel (
-    val diaryList : List<DiaryModel>? = null
+    var id: String = "",
+    var color: String = ""
         )

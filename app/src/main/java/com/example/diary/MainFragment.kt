@@ -1,23 +1,24 @@
 package com.example.diary
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diary.databinding.FragmentFirstBinding
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class FirstFragment : Fragment(), SeeDiary {
+class MainFragment : Fragment(), SeeDiary {
 
     private var _binding: FragmentFirstBinding? = null
     lateinit var id : String;
@@ -34,6 +35,7 @@ class FirstFragment : Fragment(), SeeDiary {
         bundle.putString("date", diary.date.toString())
         bundle.putString("title", diary.title )
         bundle.putString("id", diary.id )
+        bundle.putString("color", diary.color )
         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundleOf("diary" to bundle))
     }
 
@@ -41,8 +43,8 @@ class FirstFragment : Fragment(), SeeDiary {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        (activity as MainActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#21262D")))
         return binding.root
 
     }
@@ -53,31 +55,21 @@ class FirstFragment : Fragment(), SeeDiary {
         auth?.let {
             id = it.uid
         }
-
-        Firebase.firestore
+        val query = Firebase.firestore
             .collection("diary")
             .whereEqualTo("user_id", id)
-            .get().addOnSuccessListener {
-                val diaryList = mutableListOf<DiaryModel>()
+            .orderBy("date", Query.Direction.DESCENDING)
+        val options = FirestoreRecyclerOptions.Builder<DiaryModel>().setQuery(query, DiaryModel::class.java)
+            .setLifecycleOwner(this).build()
 
-                for (document in it) {
+        val rvDiaryList = binding.rvDiaryList
+        rvDiaryList.adapter = DiaryAdapter(this, options)
+        rvDiaryList.layoutManager = LinearLayoutManager(this.context)
 
-                    var data = document.toObject(DiaryModel::class.java)
-                    data.id = document.id
-                    diaryList.add(data)
-                }
-                Log.d("document", diaryList.toString())
-                val rvDiaryList = binding.rvDiaryList
-
-                rvDiaryList.adapter = DiaryListAdapter(this, diaryList)
-                rvDiaryList.layoutManager = LinearLayoutManager(this.context)
-            }
         binding.fab.setOnClickListener { view ->
             findNavController().navigate(R.id.action_FirstFragment_to_addDiaryFragment)
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

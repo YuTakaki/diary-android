@@ -1,5 +1,7 @@
 package com.example.diary
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,7 +16,7 @@ import com.google.firebase.ktx.Firebase
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class DiaryFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
 
@@ -26,18 +28,18 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val bundle = arguments?.getBundle("diary")
+        binding.tvYdDiary.text = bundle?.getString("diary")
+        binding.tvYdTitle.text = bundle?.getString("title")
+        binding.clSingleDiary.background = ColorDrawable(Color.parseColor(bundle?.getString("color").toString()))
+        (activity as MainActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(bundle?.getString("color").toString())))
 
-        binding.tvDiary.text = bundle?.getString("diary")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +61,7 @@ class SecondFragment : Fragment() {
         when (item.itemId) {
             R.id.delete -> {
                 val bundle = arguments?.getBundle("diary")
+                Log.d("errorInDelete", bundle?.getString("id").toString())
                 Firebase.firestore.collection("diary").document(bundle?.getString("id").toString())
                     .delete()
                     .addOnSuccessListener { findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment) }

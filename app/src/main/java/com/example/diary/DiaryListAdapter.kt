@@ -1,24 +1,28 @@
 package com.example.diary
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface SeeDiary {
     fun seeDiary(diary : DiaryModel)
 }
-
-class DiaryListAdapter (
+class DiaryAdapter (
     val seeDiary: SeeDiary,
-    val diaries : MutableList<DiaryModel>
-        ): RecyclerView.Adapter<DiaryListAdapter.ViewHolder>() {
+    private val options: FirestoreRecyclerOptions<DiaryModel>
+) : FirestoreRecyclerAdapter<DiaryModel, DiaryAdapter.DiaryViewHolder>(options){
+    class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-            class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryViewHolder {
+        return DiaryViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.diary_list,
                 parent,
@@ -27,18 +31,25 @@ class DiaryListAdapter (
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val diary = diaries[position]
+    override fun onBindViewHolder(holder: DiaryViewHolder, position: Int, model: DiaryModel) {
         holder.itemView.apply {
-            val sample = this.findViewById<TextView>(R.id.sample)
-            sample.text = diary.diary
+            val snapshot = getSnapshots().getSnapshot(holder.absoluteAdapterPosition)
+            model.id = snapshot.getId()
+            val title = this.findViewById<TextView>(R.id.tv_dl_title)
+            val month = this.findViewById<TextView>(R.id.tv_month)
+            val day = this.findViewById<TextView>(R.id.tv_dl_day)
+            val card = this.findViewById<CardView>(R.id.diaryCard)
+            title.text = model.title
+            val monthformatter = SimpleDateFormat("MMM")
+            val monthDateString = monthformatter.format(Date(model.date?.seconds!! * 1000L))
+            val dayformatter = SimpleDateFormat("dd")
+            val dayDateString = dayformatter.format(Date(model.date.seconds * 1000L))
+            month.text = monthDateString
+            day.text = dayDateString
+            card.setCardBackgroundColor(Color.parseColor(model.color.toString()))
         }
         holder.itemView.setOnClickListener{
-            seeDiary.seeDiary(diary)
+            seeDiary.seeDiary(model)
         }
-    }
-
-    override fun getItemCount(): Int {
-        return diaries.size
     }
 }

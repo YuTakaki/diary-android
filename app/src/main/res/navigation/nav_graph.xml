@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.diary.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:name="com.example.diary.MainFragment"
+        android:label="Diary"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -20,8 +20,8 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.diary.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:name="com.example.diary.DiaryFragment"
+        android:label="Your Diary"
         tools:layout="@layout/fragment_second">
 
         <action
@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/addDiaryFragment"
         android:name="com.example.diary.AddDiaryFragment"
-        android:label="fragment_add_diary"
+        android:label="Add Diary"
         tools:layout="@layout/fragment_add_diary" >
         <action
             android:id="@+id/action_addDiaryFragment_to_FirstFragment2"
