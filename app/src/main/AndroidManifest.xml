@@ -16,7 +16,8 @@
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.Diary.NoActionBar"></activity>
         <activity android:name=".DiaryActivity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:theme="@style/Theme.Diary.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

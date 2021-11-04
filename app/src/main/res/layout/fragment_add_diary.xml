@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
+        android:maxHeight="1in"
         android:hint="Title"
         android:inputType="textCapSentences|textMultiLine"
         android:textColor="@color/dark"
@@ -30,9 +31,8 @@
         android:inputType="textCapSentences|textMultiLine"
         android:textColor="@color/dark"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toTopOf="@+id/rvColorsAdd"
+        app:layout_constraintEnd_toStartOf="@+id/rv_emojis"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTitle"
         app:layout_constraintVertical_bias="0.0" />
@@ -48,5 +48,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.925" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_emojis"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/rvColorsAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

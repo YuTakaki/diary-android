@@ -8,5 +8,6 @@ data class DiaryModel(
     val title: String = "",
     val user_id: String = "",
     var id: String = "",
-    var color: String = ""
+    var color: String = "",
+    var emoji : String = "",
         )

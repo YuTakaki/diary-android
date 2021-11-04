@@ -39,7 +39,7 @@ class DiaryAdapter (
             val month = this.findViewById<TextView>(R.id.tv_month)
             val day = this.findViewById<TextView>(R.id.tv_dl_day)
             val card = this.findViewById<CardView>(R.id.diaryCard)
-            title.text = model.title
+            title.text = "${model.title.toString()} ${model.emoji.toString()}"
             val monthformatter = SimpleDateFormat("MMM")
             val monthDateString = monthformatter.format(Date(model.date?.seconds!! * 1000L))
             val dayformatter = SimpleDateFormat("dd")

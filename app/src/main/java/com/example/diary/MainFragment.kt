@@ -36,6 +36,7 @@ class MainFragment : Fragment(), SeeDiary {
         bundle.putString("title", diary.title )
         bundle.putString("id", diary.id )
         bundle.putString("color", diary.color )
+        bundle.putString("emoji", diary.emoji )
         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundleOf("diary" to bundle))
     }
 

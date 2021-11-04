@@ -3,6 +3,7 @@ package com.example.diary
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -35,8 +36,10 @@ class DiaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = arguments?.getBundle("diary")
+        binding.tvYdTitle.text = "${bundle?.getString("title")} ${bundle?.getString("emoji")}"
         binding.tvYdDiary.text = bundle?.getString("diary")
-        binding.tvYdTitle.text = bundle?.getString("title")
+        binding.tvYdDiary.movementMethod = ScrollingMovementMethod()
+        binding.tvYdTitle.movementMethod = ScrollingMovementMethod()
         binding.clSingleDiary.background = ColorDrawable(Color.parseColor(bundle?.getString("color").toString()))
         (activity as MainActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(bundle?.getString("color").toString())))
 

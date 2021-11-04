@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     // ...
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(findViewById(R.id.toolbar))
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
         // Configure Google Sign In
