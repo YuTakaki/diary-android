@@ -11,3 +11,6 @@ data class DiaryModel(
     var color: String = "",
     var emoji : String = "",
         )
+data class DiaryList (
+    val list: DiaryModel?
+        )
