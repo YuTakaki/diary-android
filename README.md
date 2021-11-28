@@ -4,6 +4,7 @@
 2. [Features　✨](#features-)
 3. [Tech Stack　🤖](#tech-stack-)
 4. [Future Feature 🔮](#future-feature)
+5. [Images 🖼](#images)
 
 # About 💁
 A full-stack android application to record your daily life.
@@ -31,3 +32,11 @@ You can delete your diary by clicking the delete button in the diary screen.
 
 # Future Feature
 Want to include a calendar feature which can be use for filtering and selecting diaries that you've created before.
+
+# Images
+![alt text](https://github.com/YuTakaki/diary-android/blob/master/diary_app_screenshots/Screenshot%202021-11-28%20163751.png)
+![alt text](https://github.com/YuTakaki/diary-android/blob/master/diary_app_screenshots/Screenshot%202021-11-28%20163622.png)
+![alt text](https://github.com/YuTakaki/diary-android/blob/master/diary_app_screenshots/Screenshot%202021-11-28%20163645.png)
+![alt text](https://github.com/YuTakaki/diary-android/blob/master/diary_app_screenshots/Screenshot%202021-11-28%20163720.png)
+
+
