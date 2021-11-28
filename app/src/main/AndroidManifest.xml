@@ -19,6 +19,7 @@
             android:theme="@style/Theme.Diary.NoActionBar"></activity>
         <activity android:name=".DiaryActivity"></activity>
         <activity android:name=".LoginActivity"
+            android:exported="true"
             android:theme="@style/Theme.Diary.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
