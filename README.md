@@ -40,3 +40,9 @@ Want to include a calendar feature which can be use for filtering and selecting 
 ![alt text](https://github.com/YuTakaki/diary-android/blob/master/diary_app_screenshots/Screenshot%202021-11-28%20163720.png)
 
 
+# Contact 📞
+phone number: 09041630614
+
+email: takakiiiyuuu@gmail.com
+  
+
